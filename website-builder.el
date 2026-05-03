@@ -1,7 +1,7 @@
 (require 'ox-publish)
 
 
-(setq top-html "<!DOCTYPE html><head><title>Blog</title><link rel=\"stylesheet\" href=\"styles.css\"><body><h1>Blog Entries</h1><a href=\"index.html\">Back Home</a><p>Please note that these are not in the order they were posted -- I'm currently working on that.<ul>"
+(setq top-html "<!DOCTYPE html><head><title>Blog</title><link rel=\"stylesheet\" href=\"styles.css\"><body><h1>Blog Entries</h1><a href=\"index.html\">Back Home</a><p>Please note that these are not in the order they were posted -- I'm currently working on that. There is an <a href=\"rss.xml\">RSS feed</a>, which is mostly working, but for now, you'll need to read on the site itself.<ul>"
       bottom-html "</ul></body>"
       top-rss "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><rss version=\"2.0\"><channel>"
       link-rss "https://vibe-876.github.io"
@@ -78,7 +78,7 @@ This will use the title and date set in the Org file's tags."
 			      "</title><link>" link-rss "/" post-directory "/"
 			      (file-name-nondirectory
 			       (file-name-with-extension file-name ".html"))
-			      "</link><description>>:3</description><content>"
+			      "</link><description>>:3</description><content type=\"html\">"
 			      (shell-command-to-string (concat "pandoc -t html " file-name))
 			      "</content></item>")))
 	    org-files)

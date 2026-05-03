@@ -1,0 +1,22 @@
+#+title: Website Generator
+#+author: Cam A.
+
+
+Emacs thing that generates a website.
+This is probably only ever going to be useful to me.
+
+
+* Overview
+#+begin_src elisp
+  (use-package website-builder
+    :straight '(:type git :host github :repo "vibe-876/website-builder")
+    :after org)
+#+end_src
+
+Currently, the all blog posts /must/ be within a directory called ~posts~, and the CSS must be within ~styles.css~.
+I plan on fixing this in future.
+
+You can edit the following defaults:
+- ~top-html~ The HTML that'll be at the top of the blog page.
+- ~bottom-html~ The HTML that'll be at the bottom of the page.
+- ~link-rss~ The link for the website from the RSS feed.
