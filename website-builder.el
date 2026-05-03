@@ -72,7 +72,7 @@ This will use the title and date set in the Org file's tags."
     (delete-region (point-min) (point-max))
     (insert top-rss)
     (mapcar (lambda (file-name)
-	      (insert (concat "<item><title>"
+	      (insert (concat "<entry><title>"
 			      (cam/remove-org-plist-data-from-text 
 			       (org-publish-find-property file-name :title nil))
 			      "</title><link>" link-rss "/" post-directory "/"
@@ -80,7 +80,7 @@ This will use the title and date set in the Org file's tags."
 			       (file-name-with-extension file-name ".html"))
 			      "</link><description>>:3</description><content type=\"html\">"
 			      (shell-command-to-string (concat "pandoc -t html " file-name))
-			      "</content></item>")))
+			      "</content></entry>")))
 	    org-files)
     (insert bottom-rss)
     (write-file rss-file-name)
