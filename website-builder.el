@@ -56,3 +56,5 @@ pandoc."
 			 (file-name-with-extension file-name ".html")
 			 " --css=\"" css-file "\" -s "
 			 "--syntax-highlighting=\"espresso\"")))
+
+(provide 'website-builder)
