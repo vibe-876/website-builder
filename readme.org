@@ -20,5 +20,6 @@ You can edit the following defaults:
 - ~top-html~ The HTML that'll be at the top of the blog page.
 - ~bottom-html~ The HTML that'll be at the bottom of the page.
 - ~link-rss~ The link for the website from the RSS feed.
+- ~program-colour-theme~ The colour theme that will be used for source code blocks.
 
 In the root of your website's directory, run ~M-x cam/build-website~.

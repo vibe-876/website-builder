@@ -5,7 +5,8 @@
       bottom-html "</ul></body>"
       top-rss "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><rss version=\"2.0\"><channel>"
       link-rss "https://vibe-876.github.io"
-      bottom-rss "</channel></rss>")
+      bottom-rss "</channel></rss>"
+      program-theme "haddock")
 
 
 (defun cam/build-website ()
@@ -49,9 +50,11 @@ that they were written."
 the directory containing the files to be converted, and CSS-FILE
 is the file containing the CSS they should be using."
   (let ((org-source-files (directory-files directory t "\\.org$")))
-    (mapcar 'cam/build-page org-source-files)))
+    (mapcar (lambda (file-name)
+	      (cam/build-page file-name program-theme))
+	    org-source-files)))
 
-(defun cam/build-page (file-name)
+(defun cam/build-page (file-name pandoc-theme)
   "Builds an individual page from an Org file, using
 pandoc."
   (shell-command (concat "pandoc "
@@ -59,7 +62,7 @@ pandoc."
 			 " -o "
 			 (file-name-with-extension file-name ".html")
 			 " --css=\"" css-file "\" -s "
-			 "--syntax-highlighting=\"espresso\"")))
+			 "--syntax-highlighting=\"" pandoc-theme "\"")))
 
 (defun cam/generate-rss (post-directory)
   "Generates an RSS feed, based on the Org files in POSTS-DIRECTORY.
