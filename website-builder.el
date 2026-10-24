@@ -37,7 +37,10 @@ that they were written."
     (write-file posts-file-name)
     (set-buffer old-buffer)))
 
-(defun cam/build-website-directory nil nil)
+(defun cam/build-website-directory (start-dir)
+  (let ((org-files (directory-files-recursively "." (rx (one-or-more anychar)
+							".org"))))
+    (mapcar #'cam/build-website-page org-files)))
 
 (defun cam/build-website-page (org-file)
   "Builds an individual page."
