@@ -2,6 +2,10 @@
 #+author: Cam A.
 
 
+* WARNING
+This version includes breaking changes!
+If you want to use the old version, use 
+
 Emacs thing that generates a website.
 This is probably only ever going to be useful to me.
 
