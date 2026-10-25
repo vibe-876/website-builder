@@ -2,9 +2,18 @@
 #+author: Cam A.
 
 
-* WARNING
+* COMMENT WARNING
 This version includes breaking changes!
-If you want to use the old version, use 
+If you want to use the old version, pull from commit 440a44e.
+#+begin_src elisp
+  ;; I haven't tested this, add to init.el at your own risk.
+  (use-package website-builder
+    :straight '(:type git
+  	      :host github
+  	      :repo "vibe-876/website-builder"
+  	      :commit "440a44c")
+    :after org
+#+end_src
 
 Emacs thing that generates a website.
 This is probably only ever going to be useful to me.
@@ -18,7 +27,7 @@ This is probably only ever going to be useful to me.
 #+end_src
 
 Currently, the all blog posts /must/ be within a directory called ~posts~, and the CSS must be within ~styles.css~.
-I plan on fixing this in future.
+I am currently fixing this.
 
 You can edit the following defaults:
 - ~top-html~ The HTML that'll be at the top of the blog page.
