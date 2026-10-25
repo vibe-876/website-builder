@@ -1,8 +1,8 @@
 #+title: Website Generator
-#+author: Cam A.
+#+author: Camilla A.
 
 
-* COMMENT WARNING
+* WARNING
 This version includes breaking changes!
 If you want to use the old version, pull from commit 440a44e.
 #+begin_src elisp
@@ -16,7 +16,8 @@ If you want to use the old version, pull from commit 440a44e.
 #+end_src
 
 Emacs thing that generates a website.
-This is probably only ever going to be useful to me.
+This is probably only ever going to be useful to me, though feel free to use it.
+If (as is likely) the master branch has some broken feature, feel free to open a PR or issue :) .
 
 
 * Overview
@@ -36,3 +37,13 @@ You can edit the following defaults:
 - ~program-colour-theme~ The colour theme that will be used for source code blocks.
 
 In the root of your website's directory, run ~M-x cam/build-website~.
+
+* Current Features
+- Translating a directory of Org files to HTML, with a CSS file.
+
+* Future Features (if it's ticked, then I'm currently working on it).
+- [X] Any name for the CSS file.
+- [X] Customisable directory layout.
+- [ ] Proper documentation.
+- [ ] Global settings in variables, instead of having to poke around elisp to change configs.
+- [ ] Each page saying the last commit that changed it (and a setting to turn it off).
