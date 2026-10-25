@@ -11,10 +11,11 @@
 
 (defun cam/build-website ()
   (interactive)
-  (cam/build-website-directory "." "styles.css")
-  (cam/build-website-directory "posts" "../styles.css")
-  (cam/build-website-posts-page "posts")
-  (cam/generate-rss "posts"))
+  (cam/build-website-directory))
+;; (cam/build-website-directory "." "styles.css")
+;; (cam/build-website-directory "posts" "../styles.css")
+;; (cam/build-website-posts-page "posts")
+;; (cam/generate-rss "posts"))
 
 (defun cam/build-website-posts-page (post-directory)
   "Constructs a HTML page that lists all blog entries, in the order
@@ -40,7 +41,8 @@ that they were written."
 
 (defun cam/build-website-directory (start-dir)
   (let ((org-files (directory-files-recursively "." (rx (one-or-more anychar)
-							".org"))))
+							".org"
+							line-end))))
     (mapcar #'cam/build-website-page org-files)))
 
 (defun cam/build-website-page (org-file)
@@ -54,7 +56,7 @@ that they were written."
 	(org-html-use-infojs nil))
     (with-temp-buffer
       (if (insert-file-contents org-file)
-	(org-html-export-to-html)))))
+	  (org-html-export-to-html)))))
 
 (defun cam/remove-org-plist-data-from-text (plist-string)
   "Stripts formatting from a plist string."
