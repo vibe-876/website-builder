@@ -12,7 +12,7 @@ If you want to use the old version, pull from commit 440a44e.
   	      :host github
   	      :repo "vibe-876/website-builder"
   	      :commit "440a44c")
-    :after org
+    :after org)
 #+end_src
 
 Emacs thing that generates a website.
