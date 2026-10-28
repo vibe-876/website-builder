@@ -56,7 +56,9 @@ website."
 be linked in a top bar on all pages. If SUB-DIRECTORY
 has a file with the same name, then that will be the
 landing page for the link -- otherwise, it will create
-a list of all pages within the directory."
+a list of all pages within the directory.
+
+It returns the name of the root html file of that subdir."
   (let ((org-files
 	 (directory-files-recursively sub-directory (rx (one-or-more anychar)
 							".org"
@@ -65,14 +67,16 @@ a list of all pages within the directory."
     (if (member potential-subdir-root-file
 		org-files)
 	(cam/build-website-page potential-subdir-root-file)
-      (with-temp-buffer
-	(insert (concat "#+title: " sub-directory "\n"))
-	(mapcar (lambda (filename)
-		  (insert "- " "[[file:" filename "]["
-			  (file-name-sans-extension (file-name-nondirectory filename))
-			  "]]\n"))
-		org-files)
-	(org-html-export-to-html)))))
+      (progn (with-temp-buffer
+	       (insert (concat "#+title: " (capitalize sub-directory) "\n"
+			       "#+export_file_name: " sub-directory ".html\n"))
+	       (mapcar (lambda (filename)
+			 (insert "- " "[[file:" filename "]["
+				 (file-name-sans-extension (file-name-nondirectory filename))
+				 "]]\n"))
+		       org-files)
+	       (org-html-export-to-html))
+	     (concat sub-directory ".html")))))
 
 (defun cam/build-website-page (org-file)
   "Builds an individual page. ORG-FILE is the org
