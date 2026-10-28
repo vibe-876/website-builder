@@ -48,3 +48,4 @@ In the root of your website's directory, run ~M-x cam/build-website~.
 - [ ] Global settings in variables, instead of having to poke around elisp to change configs.
 - [ ] Each page saying the last commit that changed it (and a setting to turn it off).
 - [ ] "Index" page for each directory.
+- [ ] Leaving entries out of the RSS feed if they're too old.

@@ -9,13 +9,12 @@
       bottom-rss "</channel></rss>")
 
 
-(defun cam/build-website ()
-  (interactive)
-  (cam/build-website-directory))
-;; (cam/build-website-directory "." "styles.css")
-;; (cam/build-website-directory "posts" "../styles.css")
-;; (cam/build-website-posts-page "posts")
-;; (cam/generate-rss "posts"))
+(defun cam/build-website (rss-directories)
+  "RSS-DIRECTORIES are the directories that will have
+their org files put into the RSS feed."
+  (interactive "D")
+  (cam/build-website-directory)
+  (cam/generate-rss-feed (directory)))
 
 (defun cam/build-website-posts-page (post-directory)
   "Constructs a HTML page that lists all blog entries, in the order
@@ -40,13 +39,21 @@ that they were written."
     (set-buffer old-buffer)))
 
 (defun cam/build-website-directory (start-dir)
-  (let ((org-files (directory-files-recursively "." (rx (one-or-more anychar)
+  "Builds all pages, including adding a link to all
+other pages. START-DIR is the root directory of the
+website."
+  (let* ((org-files (directory-files-recursively "." (rx (one-or-more anychar)
 							".org"
-							line-end))))
-    (mapcar #'cam/build-website-page org-files)))
+							line-end)))
+	 (org-directories (delete-dups
+			   (mapcar #'file-name-directory org-files))))
+    (mapcar #'cam/build-website-page  org-files)))
 
 (defun cam/build-website-page (org-file)
-  "Builds an individual page."
+  "Builds an individual page. ORG-FILE is the org
+file that is to be translated to html. In future versions,
+this may also take a plist as an argument, for the
+org export settings."
   (let ((org-html-head "")
 	(org-html-head-extra "")
 	(org-html-head-include-default-style nil)
@@ -68,6 +75,7 @@ that they were written."
 (defun cam/generate-rss (post-directory)
   "Generates an RSS feed, based on the Org files in POSTS-DIRECTORY.
 This will use the title and date set in the Org file's tags."
+  (message "WARNING: THIS DOESN'T WORK YET!!")
   (let ((org-files (directory-files post-directory t "\\.org$"))
 	(old-buffer (current-buffer))
 	(rss-file-name "rss.xml"))
