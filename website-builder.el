@@ -47,7 +47,33 @@ website."
 							line-end)))
 	 (org-directories (delete-dups
 			   (mapcar #'file-name-directory org-files))))
-    (mapcar #'cam/build-website-page  org-files)))
+    (mapcar #'cam/build-sub-directory 'org-directories)
+;    (mapcar #'cam/build-website-page  org-files)
+    ))
+
+(defun cam/build-sub-directory (sub-directory)
+  "Builds a sub directory of the main thing. This will
+be linked in a top bar on all pages. If SUB-DIRECTORY
+has a file with the same name, then that will be the
+landing page for the link -- otherwise, it will create
+a list of all pages within the directory."
+  (let ((org-files
+	 (directory-files-recursively sub-directory (rx (one-or-more anychar)
+							".org"
+							line-end))))
+    (if (memq (concat sub-directory ".org")
+	      org-files)
+	(cam/build-website-page (concat sub-directory ".org"))
+      (with-temp-buffer
+	(insert (concat "#+title: " sub-directory "\n"
+			"#+author: " (if author
+					 author
+				       (getenv "USER"))
+			"\n"))
+	(mapcar (lambda (filename)
+		  (insert "- " filename "\n"))
+		'org-files)
+	(org-html-export-to-html)))))
 
 (defun cam/build-website-page (org-file)
   "Builds an individual page. ORG-FILE is the org
