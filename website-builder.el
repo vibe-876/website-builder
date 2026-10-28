@@ -60,19 +60,18 @@ a list of all pages within the directory."
   (let ((org-files
 	 (directory-files-recursively sub-directory (rx (one-or-more anychar)
 							".org"
-							line-end))))
-    (if (memq (concat sub-directory ".org")
-	      org-files)
-	(cam/build-website-page (concat sub-directory ".org"))
+							line-end)))
+	(potential-subdir-root-file (concat sub-directory "/" sub-directory ".org")))
+    (if (member potential-subdir-root-file
+		org-files)
+	(cam/build-website-page potential-subdir-root-file)
       (with-temp-buffer
-	(insert (concat "#+title: " sub-directory "\n"
-			"#+author: " (if author
-					 author
-				       (getenv "USER"))
-			"\n"))
+	(insert (concat "#+title: " sub-directory "\n"))
 	(mapcar (lambda (filename)
-		  (insert "- " filename "\n"))
-		'org-files)
+		  (insert "- " "[[file:" filename "]["
+			  (file-name-sans-extension (file-name-nondirectory filename))
+			  "]]\n"))
+		org-files)
 	(org-html-export-to-html)))))
 
 (defun cam/build-website-page (org-file)
